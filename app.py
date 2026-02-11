@@ -139,15 +139,18 @@ def search_marine_life(location, date):
 st.title("🤿 Scuba Diving Agent")
 st.markdown("指定した地域の気象・海況情報と、今の時期に見られる生物をお知らせします。")
 
-# サイドバー：入力エリア
-with st.sidebar:
-    st.header("条件設定")
-    selected_spot_name = st.selectbox("エリアを選択", list(DIVING_SPOTS.keys()))
-    selected_date = st.date_input("日付を選択", datetime.date.today())
-    
+# 入力エリア
+with st.container():
+    st.subheader("条件設定")
+    col1, col2 = st.columns(2)
+    with col1:
+        selected_spot_name = st.selectbox("エリアを選択", list(DIVING_SPOTS.keys()))
+    with col2:
+        selected_date = st.date_input("日付を選択", datetime.date.today())
+
     if selected_date < datetime.date.today() - datetime.timedelta(days=7):
-         st.warning("⚠️ 過去のデータはOpen-Meteoの仕様により取得できない場合があります（Historical APIが必要になります）")
-    
+        st.warning("⚠️ 過去のデータはOpen-Meteoの仕様により取得できない場合があります（Historical APIが必要になります）")
+
     start_btn = st.button("情報を取得する", type="primary")
 
 # メイン処理
